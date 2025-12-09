@@ -26,19 +26,19 @@ jobs:
       uses: cypress-io/github-action@v6
       with:
         browser: chrome
-        start: npm start
-        wait-on: 'http://localhost:3000'
 
     - name: Upload screenshots
       uses: actions/upload-artifact@v4
-      if: failure()
+      if: failure() && hashFiles('cypress/screenshots/**') != ''
       with:
         name: cypress-screenshots
-        path: cypress/screenshots
+        path: cypress/screenshots/
+        retention-days: 7
 
     - name: Upload videos
       uses: actions/upload-artifact@v4
-      if: failure()
+      if: failure() && hashFiles('cypress/videos/**') != ''
       with:
         name: cypress-videos
-        path: cypress/videos
+        path: cypress/videos/
+        retention-days: 7
